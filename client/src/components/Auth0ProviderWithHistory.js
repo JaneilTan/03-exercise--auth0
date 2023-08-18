@@ -16,6 +16,7 @@ const Auth0ProviderWithHistory = ({ children }) => {
       domain={domain}
       clientId={clientId}
       audience={audience}
+      scope="create:properties"
       redirectUri={window.location.origin}
       onRedirectCallback={onRedirectCallback}
     >
