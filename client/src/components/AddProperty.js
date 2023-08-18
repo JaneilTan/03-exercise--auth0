@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import { useNavigate, Link } from "react-router-dom";
+import { useAuth0 } from "@auth0/auth0-react";
 import "./AddProperty.css";
 
 const AddProperty = () => {
@@ -12,10 +13,11 @@ const AddProperty = () => {
   const [isLoading, setIsLoading] = useState(false);
   const [isError, setIsError] = useState(false);
   const [errorStatus, setErrorStatus] = useState(false);
+  const { getAccessTokenSilently } = useAuth0();
 
   const handleSubmit = async (event) => {
     event.preventDefault();
-
+    const accessToken = await getAccessTokenSilently();
     setIsLoading(true);
 
     const property = {
@@ -32,6 +34,7 @@ const AddProperty = () => {
         method: "POST",
         headers: {
           "Content-Type": "application/json",
+          Authorization: `Bearer ${accessToken}`,
         },
         body: JSON.stringify(property),
       }
